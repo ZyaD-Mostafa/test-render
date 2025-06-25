@@ -1,5 +1,8 @@
+const cors = require("cors")
 const ex = require("express")
+
 const app = ex()
+app.use(cors())
 const Article = require("./models/Article.js")
 app.use(ex.json())
 const mongoose = require("mongoose")
