@@ -87,6 +87,27 @@ app.get("/articles/:articleId" ,  async (req ,res)=>{
     }
 })
 
+app.put("/articles/:articleId", async (req, res) => {
+    const id = req.params.articleId;
+    const { title, body } = req.body;
+
+    try {
+        const updatedArticle = await Article.findByIdAndUpdate(
+            id,
+            { title, body },
+            { new: true } // علشان يرجع النسخة بعد التحديث
+        );
+
+        if (!updatedArticle) {
+            return res.status(404).json({ message: "Article not found" });
+        }
+
+        res.json(updatedArticle);
+    } catch (err) {
+        res.status(500).json({ error: "Server error", details: err });
+    }
+});
+
 app.delete("/articles/:articleId" , async ( req , res )=> {
     const id = req.params.articleId 
     try{
